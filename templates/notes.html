@@ -1,0 +1,233 @@
+{% extends "base.html" %} {% block head %}
+{{ super() }}
+
+<style type="text/css">
+  body {
+    margin: 0;
+  }
+  .header {
+    text-align: center;
+    background: linear-gradient(to right, #f39509, #f364b2);
+    color: rgb(255, 255, 255);
+    padding: 10px;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .header h1 {
+    margin: 0;
+  }
+
+  .btn {
+    margin: 20px auto;
+    padding: 5px 20px;
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 12px;
+    text-decoration: none;
+    display: inline-block;
+    border: none;
+    outline: none;
+    border: 1px solid #fff;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.3s ease-in;
+  }
+
+  .btn:hover {
+    background: #06cddb;
+    color: #fff;
+  }
+
+  .container {
+    width: 60%;
+    margin: auto;
+    overflow-x: hidden;
+    text-align: center;
+    align-content: center;
+    align-items: center;
+    background: #fff;
+    height: 100vh;
+  }
+
+  .form-deco {
+    background: #03b8be;
+    border-radius: 5px;
+    padding: 20px;
+    color: #fff;
+    text-align: center;
+    width: 500px;
+    margin: 30px auto;
+    display: block;
+    box-sizing: border-box;
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  .form-group {
+    padding: 5px;
+    display: block;
+  }
+
+  .form-control-label {
+    display: block;
+    margin: 10px;
+  }
+
+  .form-control {
+    padding: 10px;
+    margin: auto;
+    width: 300px;
+    display: block;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+  }
+
+  .btn-bg {
+    padding: 10px 20px;
+    text-transform: uppercase;
+    background-color: #2e4158;
+    letter-spacing: 2px;
+    color: #fff;
+    font-size: 12px;
+    text-decoration: none;
+    display: inline-block;
+    border: none;
+    width: 200px;
+    margin: 20px;
+    outline: none;
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease-in;
+  }
+
+  .btn-bg:hover {
+    background: #06cddb;
+    color: #fff;
+  }
+
+  .title-h {
+    color: #f364b2;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin: 20px auto;
+  }
+  .items {
+    width: 500px;
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    padding: 10px;
+    margin: 40px auto;
+  }
+
+  .content {
+    background: #f2f2f2;
+    padding: 10px;
+    margin: 10px;
+  }
+
+  .awesomeTitle {
+    font-weight: 400;
+    color: #06cddb;
+    font-size: 14px;
+    text-transform: capitalize;
+  }
+  .awesome {
+    font-weight: 400;
+    color: #ee16ad;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+
+  #hr {
+    background: #ee16ad;
+  }
+
+  .submit {
+    color: #ee16ad;
+    text-align: center;
+    text-decoration: none;
+    display: inline;
+  }
+  .add {
+    color: #ffed49;
+    text-align: center;
+    text-decoration: none;
+    font-size: 18px;
+  }
+
+  #achors {
+    margin-top: 10px;
+    box-sizing: border-box;
+  }
+
+  .p {
+    opacity: 0.6;
+  }
+
+  .btn-d {
+    margin: 20px auto;
+    background: #00ccc2;
+    padding: 5px 20px;
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 12px;
+    text-decoration: none;
+    display: inline-block;
+    border: none;
+    outline: none;
+    border: 1px solid #fff;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.3s ease-in;
+  }
+
+  .btn-d:hover {
+    background: #06cddb;
+    color: #fff;
+  }
+</style>
+
+<script type="text/javascript">
+  function pop() {
+    var notes = document.getElementById("notes");
+    return notes;
+  }
+</script>
+
+{% endblock %} {% block content %}
+
+<header class="header">
+  <h1>Note app</h1>
+  <p>This application is written in Flask a microframework for python.</p>
+  <a id="pop" onmousemove="pop()" class="btn" href="{{ url_for('index') }}"
+    >Create more notes</a
+  >
+</header>
+
+<main class="container">
+  <div>
+    <h1 class="title-h">Here are your notes.</h1>
+  </div>
+
+  <div class="items" id="notes">
+    <h1 class="awesome">My notes</h1>
+    <hr id="hr" />
+    {% for allnote in allnotes %}
+    <div class="content">
+      <h1 class="awesomeTitle">
+        {{ allnote.title }}
+      </h1>
+      <p class="p">{{ allnote.note }}</p>
+      <form action="{{ url_for('delete', id=allnote.id) }}" method="POST">
+        <input type="hidden" name="method" value="DELETE" />
+        <button class="btn-d">X</button>
+      </form>
+    </div>
+
+    {% endfor %}
+  </div>
+</main>
+{% endblock %}
